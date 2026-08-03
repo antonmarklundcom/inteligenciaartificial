@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1785764989522,
+      "tag": "0000_sloppy_black_widow",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1785765009872,
+      "tag": "0001_add_check_constraints",
+      "breakpoints": true
+    }
+  ]
+}
