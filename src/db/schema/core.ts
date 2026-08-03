@@ -3,6 +3,7 @@ import {
   boolean,
   char,
   decimal,
+  foreignKey,
   index,
   int,
   json,
@@ -337,23 +338,35 @@ export const consultationRequests = mysqlTable("consultation_requests", {
 
 export const newsletterStatusEnum = ["activo", "baja", "rebotado"] as const;
 
-export const newsletterSubscribers = mysqlTable("newsletter_subscribers", {
-  id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
-  publicId: char("public_id", { length: 26 }).notNull().unique(),
-  emailNormalizado: varchar("email_normalizado", { length: 255 })
-    .notNull()
-    .unique(),
-  nombre: varchar("nombre", { length: 255 }),
-  contactId: bigint("contact_id", { mode: "number" }),
-  consentRecordId: bigint("consent_record_id", { mode: "number" })
-    .notNull()
-    .references(() => consentRecords.id),
-  status: mysqlEnum("status", newsletterStatusEnum).notNull().default("activo"),
-  source: varchar("source", { length: 128 }).notNull(),
-  unsubscribeToken: char("unsubscribe_token", { length: 43 }).notNull().unique(),
-  subscribedAt: timestamp("subscribed_at").notNull().defaultNow(),
-  unsubscribedAt: timestamp("unsubscribed_at"),
-});
+export const newsletterSubscribers = mysqlTable(
+  "newsletter_subscribers",
+  {
+    id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
+    publicId: char("public_id", { length: 26 }).notNull().unique(),
+    emailNormalizado: varchar("email_normalizado", { length: 255 })
+      .notNull()
+      .unique(),
+    nombre: varchar("nombre", { length: 255 }),
+    contactId: bigint("contact_id", { mode: "number" }),
+    consentRecordId: bigint("consent_record_id", { mode: "number" }).notNull(),
+    status: mysqlEnum("status", newsletterStatusEnum)
+      .notNull()
+      .default("activo"),
+    source: varchar("source", { length: 128 }).notNull(),
+    unsubscribeToken: char("unsubscribe_token", { length: 43 })
+      .notNull()
+      .unique(),
+    subscribedAt: timestamp("subscribed_at").notNull().defaultNow(),
+    unsubscribedAt: timestamp("unsubscribed_at"),
+  },
+  (table) => [
+    foreignKey({
+      columns: [table.consentRecordId],
+      foreignColumns: [consentRecords.id],
+      name: "newsletter_consent_fk",
+    }),
+  ],
+);
 
 export const adminRoleEnum = [
   "owner",

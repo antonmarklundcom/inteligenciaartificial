@@ -4,6 +4,7 @@ import {
   char,
   date,
   decimal,
+  foreignKey,
   index,
   json,
   mysqlEnum,
@@ -53,9 +54,7 @@ export const assessmentQuestions = mysqlTable(
   "assessment_questions",
   {
     id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
-    assessmentVersionId: bigint("assessment_version_id", { mode: "number" })
-      .notNull()
-      .references(() => assessmentVersions.id),
+    assessmentVersionId: bigint("assessment_version_id", { mode: "number" }).notNull(),
     codigo: varchar("codigo", { length: 16 }).notNull(),
     seccion: tinyint("seccion").notNull(),
     orden: tinyint("orden").notNull(),
@@ -72,6 +71,11 @@ export const assessmentQuestions = mysqlTable(
       table.assessmentVersionId,
       table.codigo,
     ),
+    foreignKey({
+      columns: [table.assessmentVersionId],
+      foreignColumns: [assessmentVersions.id],
+      name: "aq_version_fk",
+    }),
   ],
 );
 
@@ -79,9 +83,9 @@ export const assessmentQuestionOptions = mysqlTable(
   "assessment_question_options",
   {
     id: bigint("id", { mode: "number" }).autoincrement().primaryKey(),
-    assessmentQuestionId: bigint("assessment_question_id", { mode: "number" })
-      .notNull()
-      .references(() => assessmentQuestions.id),
+    assessmentQuestionId: bigint("assessment_question_id", {
+      mode: "number",
+    }).notNull(),
     codigo: varchar("codigo", { length: 16 }).notNull(),
     texto: varchar("texto", { length: 512 }).notNull(),
     orden: tinyint("orden").notNull(),
@@ -89,6 +93,13 @@ export const assessmentQuestionOptions = mysqlTable(
     leadScorePoints: tinyint("lead_score_points"),
     setsFlag: varchar("sets_flag", { length: 64 }),
   },
+  (table) => [
+    foreignKey({
+      columns: [table.assessmentQuestionId],
+      foreignColumns: [assessmentQuestions.id],
+      name: "aqo_question_fk",
+    }),
+  ],
 );
 
 export const scoringRuleTypeEnum = [
@@ -173,9 +184,9 @@ export const assessmentAnswers = mysqlTable(
     assessmentId: bigint("assessment_id", { mode: "number" })
       .notNull()
       .references(() => assessments.id),
-    assessmentQuestionId: bigint("assessment_question_id", { mode: "number" })
-      .notNull()
-      .references(() => assessmentQuestions.id),
+    assessmentQuestionId: bigint("assessment_question_id", {
+      mode: "number",
+    }).notNull(),
     codigoPregunta: varchar("codigo_pregunta", { length: 16 }).notNull(),
     valorOpciones: json("valor_opciones"),
     valorNumero: decimal("valor_numero", { precision: 10, scale: 2 }),
@@ -189,6 +200,11 @@ export const assessmentAnswers = mysqlTable(
       table.assessmentId,
       table.assessmentQuestionId,
     ),
+    foreignKey({
+      columns: [table.assessmentQuestionId],
+      foreignColumns: [assessmentQuestions.id],
+      name: "aa_question_fk",
+    }),
   ],
 );
 

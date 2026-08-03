@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "1f556686-46db-4ad5-a861-5a10c4f91f71",
+  "id": "0eb60ab5-2aa3-40b4-b1c7-dae4fe1a1317",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "admin_users": {
@@ -1342,8 +1342,8 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "newsletter_subscribers_consent_record_id_consent_records_id_fk": {
-          "name": "newsletter_subscribers_consent_record_id_consent_records_id_fk",
+        "newsletter_consent_fk": {
+          "name": "newsletter_consent_fk",
           "tableFrom": "newsletter_subscribers",
           "tableTo": "consent_records",
           "columnsFrom": [
@@ -1635,8 +1635,8 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "assessment_answers_assessment_question_id_assessment_questions_id_fk": {
-          "name": "assessment_answers_assessment_question_id_assessment_questions_id_fk",
+        "aa_question_fk": {
+          "name": "aa_question_fk",
           "tableFrom": "assessment_answers",
           "tableTo": "assessment_questions",
           "columnsFrom": [
@@ -1722,8 +1722,8 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "assessment_question_options_assessment_question_id_assessment_questions_id_fk": {
-          "name": "assessment_question_options_assessment_question_id_assessment_questions_id_fk",
+        "aqo_question_fk": {
+          "name": "aqo_question_fk",
           "tableFrom": "assessment_question_options",
           "tableTo": "assessment_questions",
           "columnsFrom": [
@@ -1848,8 +1848,8 @@
         }
       },
       "foreignKeys": {
-        "assessment_questions_assessment_version_id_assessment_versions_id_fk": {
-          "name": "assessment_questions_assessment_version_id_assessment_versions_id_fk",
+        "aq_version_fk": {
+          "name": "aq_version_fk",
           "tableFrom": "assessment_questions",
           "tableTo": "assessment_versions",
           "columnsFrom": [
