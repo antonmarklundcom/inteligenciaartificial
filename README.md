@@ -1,16 +1,29 @@
 # inteligenciaartificial.com.py
 
-Strategy and product planning for an **AI consulting and implementation firm for
-Paraguayan companies**, with a software product layer that generates and qualifies its
-own leads.
+**AI consulting and implementation firm for Paraguayan companies**, with a software
+product layer that generates and qualifies its own leads.
 
-**Status:** planning complete, no application code written. Decisions are locked;
-deviations require an ADR (`docs/14_IMPLEMENTATION_PHASES.md` §ADR process).
+**Status:** Phase 1 (MVP marketing site + tools + admin) in active build. Decisions
+are locked; deviations require an ADR (`docs/14_IMPLEMENTATION_PHASES.md` §ADR process).
 
 **Start here:** [`docs/17_LAUNCH_BLUEPRINT.md`](docs/17_LAUNCH_BLUEPRINT.md) — the whole
 plan on one page.
 
 ---
+
+## Stack
+
+Next.js (App Router, TypeScript) · MySQL 8 + Drizzle ORM · MDX content in-repo ·
+Tailwind CSS. Full rationale in `docs/11_STACK_AND_ARCHITECTURE.md`.
+
+## Development
+
+```bash
+npm install
+cp .env.example .env       # fill in local DB credentials
+npm run db:migrate         # apply migrations
+npm run dev
+```
 
 ## Documents
 
