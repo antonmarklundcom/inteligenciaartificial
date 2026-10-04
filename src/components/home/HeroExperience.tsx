@@ -42,6 +42,9 @@ const FEATURES = [
   },
 ];
 
+const FALLBACK_VIDEO = "/video/arbol-lapacho-luz-ia-paraguay.mp4";
+const FALLBACK_POSTER = "/img/arbol-lapacho-luz-inteligencia-artificial-paraguay-1920.webp";
+
 const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
 const smoothstep = (a: number, b: number, v: number) => {
   const t = clamp01((v - a) / (b - a));
@@ -59,6 +62,7 @@ export function HeroExperience({ contactHref, contactLabel }: Props) {
   const orbitRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const fallbackRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -141,8 +145,14 @@ export function HeroExperience({ contactHref, contactLabel }: Props) {
           scene.setIntro(reduceMotion ? 1 : 0);
           update();
         } catch {
-          // No WebGL: the page still works on the dark background.
+          // No WebGL: show the pre-rendered loop of the same scene instead.
           canvasRef.current?.setAttribute("hidden", "");
+          root.classList.add("no-webgl");
+          const video = fallbackRef.current;
+          if (video && !reduceMotion) {
+            video.src = FALLBACK_VIDEO;
+            video.play().catch(() => {});
+          }
           const fallback = (t: number) => {
             orbit(t / 1000);
             frame(fallback);
@@ -237,7 +247,7 @@ export function HeroExperience({ contactHref, contactLabel }: Props) {
       removeEventListener("resize", update);
       removeEventListener("pointermove", onPointerMove);
       root.removeEventListener("pointerleave", onPointerLeave);
-      root.classList.remove("is-loading", "intro-ready", "has-custom-cursor");
+      root.classList.remove("is-loading", "intro-ready", "has-custom-cursor", "no-webgl");
       scene?.dispose();
     };
   }, []);
@@ -261,6 +271,17 @@ export function HeroExperience({ contactHref, contactLabel }: Props) {
         <span className="custom-cursor-ring" />
       </div>
       <canvas id="scene" aria-hidden="true" ref={canvasRef} />
+      {/* Fallback for browsers without WebGL; the source is only set when it is needed. */}
+      <video
+        className="scene-fallback"
+        ref={fallbackRef}
+        poster={FALLBACK_POSTER}
+        muted
+        loop
+        playsInline
+        preload="none"
+        aria-hidden="true"
+      />
       <div className="vignette" aria-hidden="true" />
 
       <header className="site-header" ref={headerRef}>

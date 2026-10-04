@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.APP_BASE_URL || "https://inteligenciaartificial.com.py"),
   title: "inteligenciaartificial.com.py",
   description:
     "Consultoría e implementación de inteligencia artificial para empresas paraguayas.",

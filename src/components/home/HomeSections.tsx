@@ -157,6 +157,26 @@ export function HomeSections({ contactHref, contactLabel, email }: Props) {
 
       <section className="content-section cta-section" id="contacto" aria-labelledby="contacto-title">
         <div className="glass-card cta-card">
+          <picture className="cta-backdrop">
+            <source
+              type="image/avif"
+              srcSet="/img/ondas-de-luz-agua-petalos-lapacho-640.avif 640w, /img/ondas-de-luz-agua-petalos-lapacho-1280.avif 1280w, /img/ondas-de-luz-agua-petalos-lapacho-1920.avif 1920w"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+            />
+            <source
+              type="image/webp"
+              srcSet="/img/ondas-de-luz-agua-petalos-lapacho-640.webp 640w, /img/ondas-de-luz-agua-petalos-lapacho-1280.webp 1280w, /img/ondas-de-luz-agua-petalos-lapacho-1920.webp 1920w"
+              sizes="(max-width: 1280px) 100vw, 1280px"
+            />
+            <img
+              src="/img/ondas-de-luz-agua-petalos-lapacho-1280.webp"
+              alt=""
+              width={1920}
+              height={823}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <span className="kicker">
             <i />
             Contacto
