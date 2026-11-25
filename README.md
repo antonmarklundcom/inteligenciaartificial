@@ -13,8 +13,8 @@ plan on one page.
 
 ## Stack
 
-Next.js (App Router, TypeScript) · MySQL 8 + Drizzle ORM · MDX content in-repo ·
-Tailwind CSS. Full rationale in `docs/11_STACK_AND_ARCHITECTURE.md`.
+Next.js (App Router, TypeScript) · MySQL 8 + Drizzle ORM · Markdown content in-repo
+(`content/`, contract in [`content/README.md`](content/README.md)) · three.js 0.149.0 (pinned) for the home scene. Full rationale in `docs/11_STACK_AND_ARCHITECTURE.md`.
 
 ## Development
 
@@ -24,6 +24,10 @@ cp .env.example .env       # fill in local DB credentials
 npm run db:migrate         # apply migrations
 npm run dev
 ```
+
+The home-page particle data (`public/brain/shapes.bin`) is committed; regenerate it with
+`node scripts/build-brain-data.mjs` after changing the shapes. News and guides are the
+`.md` files under `content/`; `npm test` validates their front-matter, sources and links.
 
 ## Documents
 
